@@ -1,0 +1,13 @@
+
+<html>
+<head>
+<style>
+	audio { width: 100%;}
+</style>
+</head>
+<body>
+<audio controls autoplay loop>
+<source src='outfile.webm.part'>
+</audio>
+</body>
+</html>
