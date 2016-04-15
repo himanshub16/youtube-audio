@@ -1,45 +1,54 @@
 <html>
 <body>
 
-<button onclick="saveTextAsFile()">Play</button>
+<div id="myaudioplayer">
+	<button id="playbutton" style="width: 200px; height: 200px; " onclick="saveTextAsFile()">Stream audio</button>
 
-<script type='text/javascript'>
+</div>
+	<script type='text/javascript'>
 
-function saveTextAsFile()
-{
-	// var textToWrite = document.getElementById("inputTextToSave").value;
-	var textToWrite = document.URL;
-	var textFileAsBlob = new Blob([textToWrite], {type:'html'});
-	var fileNameToSaveAs = "myfile";
-
-	var downloadLink = document.createElement("a");
-	downloadLink.download = fileNameToSaveAs;
-	downloadLink.innerHTML = "Download File";
-	if (window.webkitURL != null)
+	function saveTextAsFile()
 	{
-		// Chrome allows the link to be clicked
-		// without actually adding it to the DOM.
-		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+		// var textToWrite = document.getElementById("inputTextToSave").value;
+		var textToWrite = document.URL;
+		var textFileAsBlob = new Blob([textToWrite], {type:'html'});
+		var fileNameToSaveAs = "myfile";
+
+		var downloadLink = document.createElement("a");
+		downloadLink.download = fileNameToSaveAs;
+		downloadLink.innerHTML = "Download File";
+		if (window.URL != null)
+		{
+			// Chrome allows the link to be clicked
+			// without actually adding it to the DOM.
+			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		}
+		else
+		{
+			// Firefox requires the link to be added to the DOM
+			// before it can be clicked.
+			downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+			downloadLink.onclick = destroyClickedElement;
+			downloadLink.style.display = "none";
+			document.body.appendChild(downloadLink);
+		}
+
+		downloadLink.click();
+
+		// create player once things have been done, and remove the button
+		// document.getElementById('playbutton').remove();
+		// document.getElementById('myaudioplayer').innerHTML = 
 	}
-	else
+
+	function destroyClickedElement(event)
 	{
-		// Firefox requires the link to be added to the DOM
-		// before it can be clicked.
-		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-		downloadLink.onclick = destroyClickedElement;
-		downloadLink.style.display = "none";
-		document.body.appendChild(downloadLink);
+		document.body.removeChild(event.target);
 	}
 
-	downloadLink.click();
-}
+	</script>
 
-function destroyClickedElement(event)
-{
-	document.body.removeChild(event.target);
-}
 
-</script>
+
 
 </body>
 </html>

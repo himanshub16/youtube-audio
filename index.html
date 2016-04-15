@@ -1,13 +1,44 @@
 <html>
 <head>
-	<style>
-		audio { width: 100%; }
-	</style>
-</head>
 
-<body>
-<audio controls loop autoplay>
-<source src = "outfile.part" preload="none">
+<title>YouTube Audio Player</title>
+<script type="text/javascript">
+	function onBodyLoad() {
+		if (localStorage.getItem('pauseTime') !== null) {
+			var elem = document.getElementById('player');
+			if (elem.duration > localStorage.getItem('pauseTime')) {
+				elem.currentTime = localStorage.getItem('pauseTime');
+			}
+		}
+	}
+</script>
+<style>
+audio {	width: 100%; }
+</style>
+<body onload="onBodyLoad()">
+<audio id='player' controls autoplay>
+<source src="outfile.part">
 </audio>
 </body>
 </html>
+
+
+<script type="text/javascript">
+	var elem = document.getElementById('player');
+	elem.addEventListener('ended', function() {
+		var t = elem.currentTime;
+		elem.pause();
+		if (t < elem.duration) {
+			localStorage.setItem('pauseTime', t);
+		}
+		else {
+			if(localStorage.getItem !== null) {
+				localStorage.removeItem('pauseTime');
+			}
+		}
+		// location.reload();
+		// elem.currentTime = t;
+		// console.log('currentTime : ' + elem.currentTime);
+	})
+
+</script>

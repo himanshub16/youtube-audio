@@ -1,0 +1,19 @@
+<html>
+<head>
+
+<script type="text/javascript">
+	var elem = document.getElementById('player');
+	elem.addEventListener(ended, function() {
+		location.reload();
+	})
+</script>
+
+<style>
+audio {	width: 100%; }
+</style>
+<body>
+<audio id='player' controls autoplay>
+<source src="outfile.part">
+</audio>
+</body>
+</html>

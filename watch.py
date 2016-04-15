@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 import logging
+from shutil import copy
 
 # htmlContentPre = """
 # <html>
@@ -28,8 +29,8 @@ import logging
 # 	audio { width: 100%; }
 # </style>
 # <body>
-# <audio controls autoplay loop>
-# <source src="outfile">
+# <audio controls autoplay>
+# <source src="outfile.part">
 # </audio>
 # </body>
 # </html>
@@ -41,9 +42,8 @@ try :
 		time.sleep(2)
 		temp = open("status", "r")
 		text = temp.readline()
-		if (len(text) == 0):
+		if "yes" not in text:
 			continue
-			
 		file = open('myfile', 'r')
 		url = file.readline()
 #			print len(url)
@@ -52,6 +52,9 @@ try :
 			print "Downloading file at ", link
 			# os.system(link)
 			link = link.split(' ')
+
+			# create index.html file forcingly
+			copy('indexbackup', 'index.html')
 			
 			# removing any previously available file
 			somelist = os.listdir(os.getcwd())
@@ -77,6 +80,7 @@ try :
 			# print "html generated"
 			# del htmlfile
 			# del htmlContent
+
 
 			temp.close()
 			temp = open("status", "w+")
